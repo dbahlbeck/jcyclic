@@ -17,7 +17,7 @@ From a test class instantiate the 'Cycles' class with a package name then call o
 ```
 # Coming soon
 - Better performance
-- Class classDependencies
+- Class cycles
 - Exclusions for classes and packages
 - Gradle plugin
   
