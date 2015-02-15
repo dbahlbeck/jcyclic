@@ -1,6 +1,8 @@
 package se.cyclic.jcycles;
 
 
+import org.jgrapht.DirectedGraph;
+import org.jgrapht.graph.DefaultEdge;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -56,5 +58,19 @@ public class CyclesTest {
         Cycles classes = new Cycles("se.cyclic.jcycles");
         List<List<String>> cycles = classes.getPackageCycles();
         Assert.assertEquals(1, cycles.size());
+    }
+
+    @Test
+    public void testClassDependencyGraph() {
+        Cycles cycles = new Cycles("se.cyclic.jcycles");
+        DirectedGraph<String, DefaultEdge> graph = cycles.getClassDependencyGraph();
+        Set<String> vertexes = graph.vertexSet();
+        Assert.assertTrue(vertexes.contains("se.cyclic.jcycles.Cycles"));
+        Assert.assertTrue(vertexes.contains("se.cyclic.jcycles.Dependency"));
+        Assert.assertTrue(vertexes.contains("se.cyclic.jcycles.CyclesTest"));
+        Assert.assertTrue(vertexes.contains("se.cyclic.jcycles.ReferenceExtractingVisitor"));
+        Assert.assertTrue(vertexes.contains("se.cyclic.jcycles.dummypackage.JustForTesting"));
+        Assert.assertTrue(vertexes.contains("se.cyclic.jcycles.dummypackage2.JustForTesting2"));
+
     }
 }

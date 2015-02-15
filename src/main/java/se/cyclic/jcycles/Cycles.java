@@ -29,6 +29,14 @@ public class Cycles {
         this.basePackage = basePackage;
     }
 
+    public void scanClasses() {
+        List<String> classNames = getClassNames();
+        for (String className : classNames) {
+
+        }
+
+    }
+
     List<String> getClassNames() {
         final ImmutableSet<ClassPath.ClassInfo> allClasses;
         try {
@@ -43,6 +51,33 @@ public class Cycles {
             throw new RuntimeException(e);
         }
     }
+
+    DirectedGraph<String, DefaultEdge> getClassDependencyGraph() {
+        final DirectedGraph<String, DefaultEdge> graph = new DefaultDirectedGraph<String, DefaultEdge>(DefaultEdge.class);
+
+        try {
+            for (String className : getClassNames()) {
+                JavaClass javaClass = Repository.lookupClass(className);
+                ConstantPool constantPool = javaClass.getConstantPool();
+                ReferenceExtractingVisitor visitor = new ReferenceExtractingVisitor(constantPool);
+                DescendingVisitor descendingVisitor = new DescendingVisitor(javaClass, visitor);
+                descendingVisitor.visit();
+                Set<String> efferentDependencies = visitor.getDependencies();
+                for (String efferentDependency : efferentDependencies) {
+                    if (efferentDependency.startsWith(basePackage) && !efferentDependency.equals(className)) {
+                        graph.addVertex(className);
+                        graph.addVertex(efferentDependency);
+                        graph.addEdge(className, efferentDependency);
+                    }
+                }
+            }
+
+            return graph;
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
 
     public Set<Dependency> getClassDependencies() {
         try {
