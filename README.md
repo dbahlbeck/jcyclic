@@ -5,19 +5,19 @@ From a test class instantiate the 'Cycles' class with a package name then call o
 ```java
     @Test
     public void testForPackageCyclicDependencies() {
-        Cycles cycles = new Cycles('org.foo');
-        Assert.assertEquals(0, cycles.getPackageCycles());
+        Cycles classDependencies = new Cycles('org.foo');
+        Assert.assertEquals(0, classDependencies.getPackageCycles());
     }  
     
     @Test
     public void testForClassCyclicDependencies() {
-        Cycles cycles = new Cycles('org.foo');
-        Assert.assertEquals(0, cycles.getClassCycles());
+        Cycles classDependencies = new Cycles('org.foo');
+        Assert.assertEquals(0, classDependencies.getClassCycles());
     }  
 ```
 # Coming soon
 - Better performance
-- Class cycles
+- Class classDependencies
 - Exclusions for classes and packages
 - Gradle plugin
   

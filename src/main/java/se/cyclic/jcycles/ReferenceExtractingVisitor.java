@@ -9,9 +9,12 @@ import org.apache.bcel.generic.Type;
 import java.util.HashSet;
 import java.util.Set;
 
+/**
+ * A bytecode visitor for extracting references (dependencies) to classes within a class.
+ */
 public class ReferenceExtractingVisitor extends EmptyVisitor {
     private final ConstantPool constantPool;
-    private Set<String> deps = new HashSet<String>();
+    private Set<String> deps = new HashSet<>();
 
     public ReferenceExtractingVisitor(ConstantPool constantPool) {
         this.constantPool = constantPool;
