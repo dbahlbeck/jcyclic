@@ -1,4 +1,4 @@
-package se.cyclic.analyzer;
+package se.cyclic.jcycles;
 
 public class Dependency {
     private String fromClass;

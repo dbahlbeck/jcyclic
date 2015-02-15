@@ -1,6 +1,6 @@
-package se.cyclic.analyzer.dummypackage2;
+package se.cyclic.jcycles.dummypackage2;
 
-import se.cyclic.analyzer.dummypackage.JustForTesting;
+import se.cyclic.jcycles.dummypackage.JustForTesting;
 
 public class JustForTesting2 {
     private JustForTesting partOfCycle = new JustForTesting();
