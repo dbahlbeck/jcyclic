@@ -17,8 +17,9 @@ public class ClassFinderTest {
         Assert.assertTrue(classNames.contains("se.cyclic.jcycles.dummypackage.JustForTesting"));
         Assert.assertTrue(classNames.contains("se.cyclic.jcycles.dummypackage2.JustForTesting2"));
         Assert.assertTrue(classNames.contains("se.cyclic.jcycles.ClassDependencies"));
+        Assert.assertTrue(classNames.contains("se.cyclic.jcycles.ClassFinder"));
 
-        Assert.assertEquals(6, classNames.size());
+        Assert.assertEquals(7, classNames.size());
     }
 
 }
