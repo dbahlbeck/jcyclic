@@ -20,6 +20,11 @@ import java.util.Set;
 public class Cycles {
     private final String basePackage;
 
+    /**
+     * Create a cyclic dependency analyser for all the classes and package under the specified base package.
+     *
+     * @param basePackage the parent package for all classes to scan
+     */
     public Cycles(String basePackage) {
         this.basePackage = basePackage;
     }
