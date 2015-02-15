@@ -29,13 +29,6 @@ public class Cycles {
         this.basePackage = basePackage;
     }
 
-    public void scanClasses() {
-        List<String> classNames = getClassNames();
-        for (String className : classNames) {
-
-        }
-
-    }
 
     List<String> getClassNames() {
         final ImmutableSet<ClassPath.ClassInfo> allClasses;
