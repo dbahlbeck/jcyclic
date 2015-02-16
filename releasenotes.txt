@@ -1,0 +1,7 @@
+Release 0.1
+-----------
+
+Initial release of jcycles.
+Includes:
+- classpath scanning for class dependency tree
+- cycle detection

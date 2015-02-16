@@ -13,6 +13,7 @@ apply plugin: 'maven-publish'
 apply plugin: 'com.jfrog.bintray'
 
 group = 'se.cyclic'
+version = '0.1'
 
 // custom tasks for creating source/javadoc jars
 task sourcesJar(type: Jar, dependsOn: classes) {
@@ -50,12 +51,10 @@ bintray {
         name = 'jcycles'
         desc = 'A Java API for finding cyclic dependencies'
         licenses = ['MIT']
+        vcsUrl = 'https://github.com/wursley/jcycles.git'
+        websiteUrl = 'https://github.com/wursley/jcycles.git'
+        issueTrackerUrl = 'https://github.com/wursley/jcycles/issues'
         labels = ['java', 'dependencies', 'cycles', 'packages', 'classes']
-        //version.attributes = [ ]
-        version {
-            name = '0.1'
-
-        }
     }
 }
 
