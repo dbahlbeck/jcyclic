@@ -5,15 +5,12 @@ From a test class instantiate the 'Cycles' class with a package name then call o
 ```java
     @Test
     public void testForPackageCyclicDependencies() {
-        Cycles classDependencies = new Cycles('org.foo');
-        Assert.assertEquals(0, classDependencies.getPackageCycles());
-    }  
-    
-    @Test
-    public void testForClassCyclicDependencies() {
-        Cycles classDependencies = new Cycles('org.foo');
-        Assert.assertEquals(0, classDependencies.getClassCycles());
-    }  
+        ClassFinder classFinder = new ClassFinder("se.cyclic.jcycles");
+        ClassDependencies classDependencies = new ClassDependencies(classFinder, "se.cyclic.jcycles");
+
+        List<List<String>> cycles = classDependencies.getPackageCycles();
+        List<List<String>> classCycles = classDependencies.getClassCycles();
+    }}
 ```
 # Coming soon
 - Better performance
