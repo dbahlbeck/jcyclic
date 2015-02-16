@@ -1,12 +1,70 @@
-apply plugin:'java'
-apply plugin:'groovy'
+buildscript {
+    repositories {
+        jcenter()
+    }
+    dependencies {
+        classpath 'com.jfrog.bintray.gradle:gradle-bintray-plugin:1.0'
+    }
+}
+
+apply plugin: 'java'
+apply plugin: 'groovy'
+apply plugin: 'maven-publish'
+apply plugin: 'com.jfrog.bintray'
+
+group = 'se.cyclic'
+
+// custom tasks for creating source/javadoc jars
+task sourcesJar(type: Jar, dependsOn: classes) {
+    classifier = 'sources'
+    from sourceSets.main.allSource
+}
+
+task javadocJar(type: Jar, dependsOn: javadoc) {
+    classifier = 'javadoc'
+    from javadoc.destinationDir
+}
+
+artifacts {
+    archives sourcesJar, javadocJar
+}
+
+publishing {
+    publications {
+        mavenJava(MavenPublication) {
+            from components.java
+            
+
+            artifact sourcesJar
+            artifact javadocJar
+        }
+    }
+}
+
+bintray {
+    user = project.properties['bintrayUsername']
+    key = project.properties['bintrayApiKey']
+    publications = ['mavenJava']
+    pkg {
+        repo = 'maven'
+        name = 'jcycles'
+        desc = 'A Java API for finding cyclic dependencies'
+        licenses = ['MIT']
+        labels = ['java', 'dependencies', 'cycles', 'packages', 'classes']
+        //version.attributes = [ ]
+        version {
+            name = '0.1'
+
+        }
+    }
+}
 
 test {
     useJUnit()
 }
 
 repositories {
-    mavenCentral()
+    jcenter()
 }
 
 dependencies {
