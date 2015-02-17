@@ -1,16 +1,15 @@
-package se.cyclic.jcycles;
+package se.cyclic.jcyclic;
 
 
 import com.google.common.collect.Iterables;
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.Test;
 
 import java.util.List;
 
 public class ClassDependenciesTest {
-    private ClassFinder classFinder = new ClassFinder("se.cyclic.jcycles");
-    private ClassDependencies classDependencies = new ClassDependencies(classFinder, "se.cyclic.jcycles");
+    private ClassFinder classFinder = new ClassFinder("se.cyclic.jcyclic");
+    private ClassDependencies classDependencies = new ClassDependencies(classFinder, "se.cyclic.jcyclic");
 
     @Test
     public void testFindPackageCycles() {
@@ -25,7 +24,7 @@ public class ClassDependenciesTest {
         List<List<String>> classCycles = classDependencies.getClassCycles();
         List<String> cycle = Iterables.getOnlyElement(classCycles);
         Assert.assertEquals(2, cycle.size());
-        Assert.assertTrue(cycle.contains("se.cyclic.jcycles.dummypackage.JustForTesting"));
-        Assert.assertTrue(cycle.contains("se.cyclic.jcycles.dummypackage2.JustForTesting2"));
+        Assert.assertTrue(cycle.contains("se.cyclic.jcyclic.dummypackage.JustForTesting"));
+        Assert.assertTrue(cycle.contains("se.cyclic.jcyclic.dummypackage2.JustForTesting2"));
     }
 }

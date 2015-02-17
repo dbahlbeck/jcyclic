@@ -5,8 +5,8 @@ From a test class instantiate the 'Cycles' class with a package name then call o
 ```java
     @Test
     public void testForPackageCyclicDependencies() {
-        ClassFinder classFinder = new ClassFinder("se.cyclic.jcycles");
-        ClassDependencies classDependencies = new ClassDependencies(classFinder, "se.cyclic.jcycles");
+        ClassFinder classFinder = new ClassFinder("se.cyclic.jcyclic");
+        ClassDependencies classDependencies = new ClassDependencies(classFinder, "se.cyclic.jcyclic");
 
         List<List<String>> cycles = classDependencies.getPackageCycles();
         List<List<String>> classCycles = classDependencies.getClassCycles();

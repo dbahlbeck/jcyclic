@@ -48,12 +48,12 @@ bintray {
     publications = ['mavenJava']
     pkg {
         repo = 'maven'
-        name = 'jcycles'
+        name = 'jcyclic'
         desc = 'A Java API for finding cyclic dependencies'
         licenses = ['MIT']
-        vcsUrl = 'https://github.com/wursley/jcycles.git'
-        websiteUrl = 'https://github.com/wursley/jcycles.git'
-        issueTrackerUrl = 'https://github.com/wursley/jcycles/issues'
+        vcsUrl = 'https://github.com/wursley/jcyclic.git'
+        websiteUrl = 'https://github.com/wursley/jcyclic.git'
+        issueTrackerUrl = 'https://github.com/wursley/jcyclic/issues'
         labels = ['java', 'dependencies', 'cycles', 'packages', 'classes']
     }
 }

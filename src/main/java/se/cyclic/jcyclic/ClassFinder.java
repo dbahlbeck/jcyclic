@@ -1,4 +1,4 @@
-package se.cyclic.jcycles;
+package se.cyclic.jcyclic;
 
 import com.google.common.collect.ImmutableSet;
 import com.google.common.reflect.ClassPath;

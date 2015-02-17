@@ -1,4 +1,4 @@
-package se.cyclic.jcycles;
+package se.cyclic.jcyclic;
 
 import org.apache.bcel.classfile.ConstantClass;
 import org.apache.bcel.classfile.ConstantPool;
