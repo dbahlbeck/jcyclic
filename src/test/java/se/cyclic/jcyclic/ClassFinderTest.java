@@ -9,17 +9,20 @@ public class ClassFinderTest {
 
     @Test
     public void testGetClassNames() {
-        ClassFinder classDependencies = new ClassFinder("se.cyclic.jcyclic");
-        List<String> classNames = classDependencies.getClassNamesFromSystemClassLoader();
+        ClasspathFinder classDependencies = new ClasspathFinder("se.cyclic.jcyclic");
+        List<String> classNames = classDependencies.getClassList();
         Assert.assertTrue(classNames.contains("se.cyclic.jcyclic.ClassDependencies"));
         Assert.assertTrue(classNames.contains("se.cyclic.jcyclic.ClassDependenciesTest"));
         Assert.assertTrue(classNames.contains("se.cyclic.jcyclic.ReferenceExtractingVisitor"));
         Assert.assertTrue(classNames.contains("se.cyclic.jcyclic.dummypackage.JustForTesting"));
         Assert.assertTrue(classNames.contains("se.cyclic.jcyclic.dummypackage2.JustForTesting2"));
         Assert.assertTrue(classNames.contains("se.cyclic.jcyclic.ClassDependencies"));
+        Assert.assertTrue(classNames.contains("se.cyclic.jcyclic.ClasspathFinder"));
         Assert.assertTrue(classNames.contains("se.cyclic.jcyclic.ClassFinder"));
+        Assert.assertTrue(classNames.contains("se.cyclic.jcyclic.DirectoryFinder"));
+        Assert.assertTrue(classNames.contains("se.cyclic.jcyclic.DirectoryFinderTest"));
 
-        Assert.assertEquals(7, classNames.size());
+        Assert.assertEquals(10, classNames.size());
     }
 
 }

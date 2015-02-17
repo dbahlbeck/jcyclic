@@ -31,7 +31,7 @@ public class ClassDependencies {
     }
 
     public void analyseClasses() {
-        getClassDependencyGraph(classFinder.getClassNamesFromSystemClassLoader());
+        getClassDependencyGraph(classFinder.getClassList());
     }
 
 

@@ -8,7 +8,7 @@ import org.junit.Test;
 import java.util.List;
 
 public class ClassDependenciesTest {
-    private ClassFinder classFinder = new ClassFinder("se.cyclic.jcyclic");
+    private ClasspathFinder classFinder = new ClasspathFinder("se.cyclic.jcyclic");
     private ClassDependencies classDependencies = new ClassDependencies(classFinder, "se.cyclic.jcyclic");
 
     @Test
