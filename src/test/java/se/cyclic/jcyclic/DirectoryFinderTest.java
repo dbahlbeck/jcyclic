@@ -29,10 +29,9 @@ public class DirectoryFinderTest {
         Assert.assertTrue(classNames.contains("se.cyclic.jcyclic.dummypackage2.JustForTesting2"));
         Assert.assertTrue(classNames.contains("se.cyclic.jcyclic.ClassFinderTest"));
         Assert.assertTrue(classNames.contains("se.cyclic.jcyclic.DirectoryFinderTest"));
-        Assert.assertTrue(classNames.contains("se.cyclic.jcyclic.DirectoryFinderTest$InnerClassForTesting"));
         Assert.assertTrue(classNames.contains("se.cyclic.jcyclic.ClassDependenciesTest"));
 
-        Assert.assertEquals(6, classNames.size());
+        Assert.assertEquals(5, classNames.size());
     }
     
     // DirectoryFinder should ignore this

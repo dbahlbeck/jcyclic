@@ -42,6 +42,7 @@ public class ClassDependencies {
         try {
             for (String from : classes) {
                 JavaClass javaClass = Repository.lookupClass(from);
+                
                 ConstantPool constantPool = javaClass.getConstantPool();
                 ReferenceExtractingVisitor visitor = new ReferenceExtractingVisitor(constantPool);
                 DescendingVisitor descendingVisitor = new DescendingVisitor(javaClass, visitor);

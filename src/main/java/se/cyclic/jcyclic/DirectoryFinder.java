@@ -3,13 +3,11 @@ package se.cyclic.jcyclic;
 
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.filefilter.DirectoryFileFilter;
-import org.apache.commons.io.filefilter.IOFileFilter;
 import org.apache.commons.io.filefilter.SuffixFileFilter;
 
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Iterator;
 import java.util.List;
 
 public class DirectoryFinder implements ClassFinder {
@@ -25,7 +23,9 @@ public class DirectoryFinder implements ClassFinder {
         Collection<File> files = FileUtils.listFiles(directory, new SuffixFileFilter("class"), DirectoryFileFilter.DIRECTORY);
         for (File file : files) {
             String fullyQualifiedClassName = getClassNameFromFile(file);
-            classes.add(fullyQualifiedClassName);
+            if (!fullyQualifiedClassName.contains("$")) {
+                classes.add(fullyQualifiedClassName);
+            }
         }
         return classes;
     }

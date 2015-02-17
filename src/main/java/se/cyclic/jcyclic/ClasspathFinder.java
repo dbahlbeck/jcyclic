@@ -27,8 +27,9 @@ public class ClasspathFinder implements ClassFinder {
             allClasses = ClassPath.from(ClassLoader.getSystemClassLoader()).getAllClasses();
             final List<String> strings = new ArrayList<>();
             for (ClassPath.ClassInfo allClass : allClasses) {
-                if (allClass.getPackageName().startsWith(basePackage))
+                if (allClass.getPackageName().startsWith(basePackage) && !allClass.getName().contains("$")) {
                     strings.add(allClass.getName());
+                }
             }
             return strings;
         } catch (IOException e) {
