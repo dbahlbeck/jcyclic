@@ -12,8 +12,8 @@ apply plugin: 'groovy'
 apply plugin: 'maven-publish'
 apply plugin: 'com.jfrog.bintray'
 
-group = 'se.cyclic'
-version = '0.1'
+group = 'se.cyclic.jcyclic'
+version = '0.1.1'
 
 // custom tasks for creating source/javadoc jars
 task sourcesJar(type: Jar, dependsOn: classes) {

@@ -5,3 +5,7 @@ Initial release of jcycles.
 Includes:
 - classpath scanning for class dependency tree
 - cycle detection
+
+Release 0.1.1
+-------------
+Refactored class analysis
