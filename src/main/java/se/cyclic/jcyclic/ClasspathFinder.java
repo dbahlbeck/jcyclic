@@ -2,6 +2,8 @@ package se.cyclic.jcyclic;
 
 import com.google.common.collect.ImmutableSet;
 import com.google.common.reflect.ClassPath;
+import org.apache.bcel.Repository;
+import org.apache.bcel.classfile.JavaClass;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -20,19 +22,21 @@ public class ClasspathFinder implements ClassFinder {
 
     private String basePackage;
 
+
     @Override
-    public List<String> getClassList() {
+    public List<JavaClass> getJavaClassList() {
         final ImmutableSet<ClassPath.ClassInfo> allClasses;
         try {
             allClasses = ClassPath.from(ClassLoader.getSystemClassLoader()).getAllClasses();
-            final List<String> strings = new ArrayList<>();
+            final List<JavaClass> javaClasses = new ArrayList<>();
             for (ClassPath.ClassInfo allClass : allClasses) {
                 if (allClass.getPackageName().startsWith(basePackage) && !allClass.getName().contains("$")) {
-                    strings.add(allClass.getName());
+                    JavaClass javaClass = Repository.getRepository().loadClass(allClass.getName());
+                    javaClasses.add(javaClass);
                 }
             }
-            return strings;
-        } catch (IOException e) {
+            return javaClasses;
+        } catch (IOException | ClassNotFoundException e) {
             throw new RuntimeException(e);
         }
     }

@@ -29,46 +29,53 @@ public class ClassDependencies {
         this.basePackage = basePackage;
         analyseClasses();
     }
+    
+    /**
+     * Create a cyclic dependency analyser for all the classes on the classpath and under the specified base package.
+     *
+     * @param basePackage the parent package for all classes to analyse
+     */
+    public ClassDependencies(String basePackage) {
+        this.classFinder = new ClasspathFinder(basePackage);
+        this.basePackage = basePackage;
+        analyseClasses();
+    }
 
     public void analyseClasses() {
-        getClassDependencyGraph(classFinder.getClassList());
+        getClassDependencyGraph(classFinder.getJavaClassList());
     }
 
 
-    private void getClassDependencyGraph(List<String> classes) {
+    private void getClassDependencyGraph(List<JavaClass> classes) {
         classGraph = new DefaultDirectedGraph<>(DefaultEdge.class);
         packageGraph = new DefaultDirectedGraph<>(DefaultEdge.class);
 
-        try {
-            for (String from : classes) {
-                JavaClass javaClass = Repository.lookupClass(from);
-                
-                ConstantPool constantPool = javaClass.getConstantPool();
-                ReferenceExtractingVisitor visitor = new ReferenceExtractingVisitor(constantPool);
-                DescendingVisitor descendingVisitor = new DescendingVisitor(javaClass, visitor);
-                descendingVisitor.visit();
-                Set<String> efferentDependencies = visitor.getDependencies();
-                for (String to : efferentDependencies) {
-                    if (to.startsWith(basePackage)) {
-                        if (!to.equals(from)) {
-                            classGraph.addVertex(from);
-                            classGraph.addVertex(to);
-                            classGraph.addEdge(from, to);
-                        }
-                        String fromPkg = convertToPackage(from);
-                        String toPkg = convertToPackage(to);
-                        if (!fromPkg.equals(toPkg)) {
-                            packageGraph.addVertex(fromPkg);
-                            packageGraph.addVertex(toPkg);
-                            packageGraph.addEdge(fromPkg, toPkg);
-                        }
-                    }
+        for (JavaClass from : classes) {
 
+            ConstantPool constantPool = from.getConstantPool();
+            ReferenceExtractingVisitor visitor = new ReferenceExtractingVisitor(constantPool);
+            DescendingVisitor descendingVisitor = new DescendingVisitor(from, visitor);
+            descendingVisitor.visit();
+            Set<String> efferentDependencies = visitor.getDependencies();
+            for (String to : efferentDependencies) {
+                if (to.startsWith(basePackage)) {
+                    if (!to.equals(from.getClassName())) {
+                        classGraph.addVertex(from.getClassName());
+                        classGraph.addVertex(to);
+                        classGraph.addEdge(from.getClassName(), to);
+                    }
+                    String fromPkg = convertToPackage(from.getClassName());
+                    String toPkg = convertToPackage(to);
+                    if (!fromPkg.equals(toPkg)) {
+                        packageGraph.addVertex(fromPkg);
+                        packageGraph.addVertex(toPkg);
+                        packageGraph.addEdge(fromPkg, toPkg);
+                    }
                 }
+
             }
-        } catch (ClassNotFoundException e) {
-            throw new RuntimeException(e);
         }
+
 
     }
 
