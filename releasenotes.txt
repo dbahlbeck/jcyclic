@@ -1,11 +1,15 @@
-Release 0.1
------------
+0.1
+---
 
 Initial release of jcycles.
 Includes:
 - classpath scanning for class dependency tree
 - cycle detection
 
-Release 0.1.1
--------------
+0.1.1
+-----
 Refactored class analysis
+
+0.1.2
+-----
+Compiled for java 7 compatibility

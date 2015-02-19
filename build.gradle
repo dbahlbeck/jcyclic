@@ -13,7 +13,7 @@ apply plugin: 'maven-publish'
 apply plugin: 'com.jfrog.bintray'
 
 group = 'se.cyclic.jcyclic'
-version = '0.1.1'
+version = '0.1.2'
 
 // custom tasks for creating source/javadoc jars
 task sourcesJar(type: Jar, dependsOn: classes) {
@@ -40,6 +40,11 @@ publishing {
             artifact javadocJar
         }
     }
+}
+compileJava {
+    targetCompatibility = 1.7
+    sourceCompatibility = 1.7
+
 }
 
 bintray {

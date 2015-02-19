@@ -10,7 +10,7 @@ From a test class instantiate the 'Cycles' class with a package name then call o
 
         List<List<String>> cycles = classDependencies.getPackageCycles();
         List<List<String>> classCycles = classDependencies.getClassCycles();
-    }}
+    }
 ```
 # Coming soon
 - Exclusions for classes and packages
