@@ -10,6 +10,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 
+/**
+ * This class finder simply scans the system class loader looking for all classes in a particular package and below.
+ */
 public class ClasspathFinder implements ClassFinder {
 
     /**

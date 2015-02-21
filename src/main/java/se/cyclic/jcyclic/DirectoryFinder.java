@@ -1,8 +1,8 @@
 package se.cyclic.jcyclic;
 
 
-import org.apache.bcel.Repository;
 import org.apache.bcel.classfile.JavaClass;
+import org.apache.bcel.util.SyntheticRepository;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.filefilter.DirectoryFileFilter;
 import org.apache.commons.io.filefilter.SuffixFileFilter;
@@ -12,9 +12,16 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
+/**
+ * This class finder analyses a directory and all sub-directories. Any class files found will be analysed.
+ * Inner classes and anonymous inner classes will be ignored.
+ */
 public class DirectoryFinder implements ClassFinder {
     private File directory;
 
+    /**
+     * @param directory
+     */
     public DirectoryFinder(File directory) {
         this.directory = directory;
     }
@@ -27,7 +34,7 @@ public class DirectoryFinder implements ClassFinder {
             for (File file : files) {
                 String fullyQualifiedClassName = getClassNameFromFile(file);
                 if (!fullyQualifiedClassName.contains("$")) {
-                    javaClasses.add(Repository.getRepository().loadClass(fullyQualifiedClassName));
+                    javaClasses.add(SyntheticRepository.getInstance().loadClass(fullyQualifiedClassName));
                 }
             }
             return javaClasses;
