@@ -1,6 +1,7 @@
 package se.cyclic.jcyclic;
 
 
+import org.apache.bcel.classfile.ClassParser;
 import org.apache.bcel.classfile.JavaClass;
 import org.apache.bcel.util.SyntheticRepository;
 import org.apache.commons.io.FileUtils;
@@ -8,6 +9,7 @@ import org.apache.commons.io.filefilter.DirectoryFileFilter;
 import org.apache.commons.io.filefilter.SuffixFileFilter;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -29,22 +31,24 @@ public class DirectoryFinder implements ClassFinder {
     @Override
     public List<JavaClass> getJavaClassList() {
         Collection<File> files = FileUtils.listFiles(directory, new SuffixFileFilter("class"), DirectoryFileFilter.DIRECTORY);
+        
         try {
             List<JavaClass> javaClasses = new ArrayList<>();
             for (File file : files) {
                 String fullyQualifiedClassName = getClassNameFromFile(file);
                 if (!fullyQualifiedClassName.contains("$")) {
-                    javaClasses.add(SyntheticRepository.getInstance().loadClass(fullyQualifiedClassName));
+                    ClassParser classParser = new ClassParser(file.getAbsolutePath());
+                    javaClasses.add(classParser.parse());
                 }
             }
             return javaClasses;
-        } catch (ClassNotFoundException e) {
+        } catch (IOException e) {
             throw new RuntimeException(e);
         }
     }
 
-    
-    
+
+
     private String getClassNameFromFile(File file) {
         String classNameWithSlashes = file.getAbsolutePath().replace(directory.getAbsolutePath(), "");
         String classNameWithDots = classNameWithSlashes.replace(File.separator, ".");
