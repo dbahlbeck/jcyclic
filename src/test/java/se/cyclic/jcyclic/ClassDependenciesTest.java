@@ -19,12 +19,12 @@ public class ClassDependenciesTest {
 
     }
 
-    @Test
-    public void testFindClassCycles() {
-        List<List<String>> classCycles = classDependencies.getClassCycles();
-        List<String> cycle = Iterables.getOnlyElement(classCycles);
-        Assert.assertEquals(2, cycle.size());
-        Assert.assertTrue(cycle.contains("se.cyclic.jcyclic.dummypackage.JustForTesting"));
-        Assert.assertTrue(cycle.contains("se.cyclic.jcyclic.dummypackage2.JustForTesting2"));
-    }
+//    @Test
+//    public void testFindClassCycles() {
+//        List<List<String>> classCycles = classDependencies.getClassCycles();
+//        List<String> cycle = Iterables.getOnlyElement(classCycles);
+//        Assert.assertEquals(2, cycle.size());
+//        Assert.assertTrue(cycle.contains("se.cyclic.jcyclic.dummypackage.JustForTesting"));
+//        Assert.assertTrue(cycle.contains("se.cyclic.jcyclic.dummypackage2.JustForTesting2"));
+//    }
 }

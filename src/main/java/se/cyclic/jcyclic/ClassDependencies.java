@@ -1,6 +1,5 @@
 package se.cyclic.jcyclic;
 
-import org.apache.bcel.Repository;
 import org.apache.bcel.classfile.ConstantPool;
 import org.apache.bcel.classfile.DescendingVisitor;
 import org.apache.bcel.classfile.JavaClass;
@@ -13,7 +12,6 @@ import java.util.List;
 import java.util.Set;
 
 public class ClassDependencies {
-    private DirectedGraph<String, DefaultEdge> classGraph = new DefaultDirectedGraph<>(DefaultEdge.class);
     private DirectedGraph<String, DefaultEdge> packageGraph = new DefaultDirectedGraph<>(DefaultEdge.class);
     private ClassFinder classFinder;
     private String basePackage;
@@ -47,7 +45,6 @@ public class ClassDependencies {
 
 
     private void getClassDependencyGraph(List<JavaClass> classes) {
-        classGraph = new DefaultDirectedGraph<>(DefaultEdge.class);
         packageGraph = new DefaultDirectedGraph<>(DefaultEdge.class);
 
         for (JavaClass from : classes) {
@@ -59,11 +56,6 @@ public class ClassDependencies {
             Set<String> efferentDependencies = visitor.getDependencies();
             for (String to : efferentDependencies) {
                 if (to.startsWith(basePackage)) {
-                    if (!to.equals(from.getClassName())) {
-                        classGraph.addVertex(from.getClassName());
-                        classGraph.addVertex(to);
-                        classGraph.addEdge(from.getClassName(), to);
-                    }
                     String fromPkg = convertToPackage(from.getClassName());
                     String toPkg = convertToPackage(to);
                     if (!fromPkg.equals(toPkg)) {
@@ -84,10 +76,6 @@ public class ClassDependencies {
         return getCycles(packageGraph);
     }
 
-
-    public List<List<String>> getClassCycles() {
-        return getCycles(classGraph);
-    }
 
     private List<List<String>> getCycles(DirectedGraph<String, DefaultEdge> graph) {
         TarjanSimpleCycles<String, DefaultEdge> cycles = new TarjanSimpleCycles<>(graph);

@@ -41,14 +41,6 @@ public class DirectoryFinderTest {
         Assert.assertEquals(5, classNames.size());
     }
 
-    @Test
-    public void testLoadClassesFromAnotherProject() {
-        ClassFinder finder = new DirectoryFinder(new File("../some-cycles/build/classes/main"));
-        List<JavaClass> javaClasses = finder.getJavaClassList();
-
-
-    }
-    
     private List<String> convertToClassNames(List<JavaClass> javaClasses) {
         List<String> classNames = new ArrayList<>();
         for (JavaClass javaClass : javaClasses) {
