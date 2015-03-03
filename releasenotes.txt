@@ -17,3 +17,8 @@ Compiled for java 7 compatibility
 0.1.3
 -----
 Corrections to class analysing from .class files
+
+0.1.4
+-----
+Cycle detection was very slow so I've replaced it with a simpler mechanism
+that only finds the packages involved in a cycle.

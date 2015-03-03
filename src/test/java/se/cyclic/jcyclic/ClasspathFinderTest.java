@@ -26,7 +26,7 @@ public class ClasspathFinderTest {
 
     private void verifyContainedClasses(List<String> classNames) {
         Assert.assertTrue(classNames.contains("se.cyclic.jcyclic.ClassDependencies"));
-        Assert.assertTrue(classNames.contains("se.cyclic.jcyclic.ClassDependenciesTest"));
+        Assert.assertTrue(classNames.contains("se.cyclic.jcyclic.ClassDependenciesClassPathTest"));
         Assert.assertTrue(classNames.contains("se.cyclic.jcyclic.ReferenceExtractingVisitor"));
         Assert.assertTrue(classNames.contains("se.cyclic.jcyclic.dummypackage.JustForTesting"));
         Assert.assertTrue(classNames.contains("se.cyclic.jcyclic.dummypackage2.JustForTesting2"));

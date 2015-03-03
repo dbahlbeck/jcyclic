@@ -36,7 +36,7 @@ public class DirectoryFinderTest {
         Assert.assertTrue(classNames.contains("se.cyclic.jcyclic.dummypackage2.JustForTesting2"));
         Assert.assertTrue(classNames.contains("se.cyclic.jcyclic.ClasspathFinderTest"));
         Assert.assertTrue(classNames.contains("se.cyclic.jcyclic.DirectoryFinderTest"));
-        Assert.assertTrue(classNames.contains("se.cyclic.jcyclic.ClassDependenciesTest"));
+        Assert.assertTrue(classNames.contains("se.cyclic.jcyclic.ClassDependenciesClassPathTest"));
 
         Assert.assertEquals(5, classNames.size());
     }
