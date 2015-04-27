@@ -21,6 +21,7 @@ import java.util.Set;
  * don't have any dependencies.
  */
 public class ClassDependencies {
+    private static final String NO_PACAKGE = "<no package>";
     private DirectedGraph<String, DefaultEdge> packageGraph = new DefaultDirectedGraph<>(DefaultEdge.class);
     private ClassFinder classFinder;
     private String basePackage;
@@ -99,9 +100,18 @@ public class ClassDependencies {
         return packageGraph.vertexSet().size();
     }
 
-    private String convertToPackage(String input) {
-        final int lastDotIndex = input.lastIndexOf('.');
-        return input.substring(0, lastDotIndex);
+    /**
+     * Returns the package from a fully qualified class name. For example, a.b.c.Clazz will be converted to
+     * a.b.c.
+     * @param fullyQualifiedClassName a fully qualified class name
+     * @return the class's package
+     */
+    private String convertToPackage(String fullyQualifiedClassName) {
+        final int lastDotIndex = fullyQualifiedClassName.lastIndexOf('.');
+        if (lastDotIndex == -1) {
+            return NO_PACAKGE;
+        }
+        return fullyQualifiedClassName.substring(0, lastDotIndex);
     }
 
     /**
