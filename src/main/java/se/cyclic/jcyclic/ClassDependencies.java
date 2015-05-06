@@ -1,14 +1,12 @@
 package se.cyclic.jcyclic;
 
-import org.apache.bcel.classfile.ConstantPool;
-import org.apache.bcel.classfile.DescendingVisitor;
-import org.apache.bcel.classfile.JavaClass;
 import org.jgrapht.DirectedGraph;
 import org.jgrapht.alg.CycleDetector;
-import org.jgrapht.alg.cycle.TarjanSimpleCycles;
+import org.jgrapht.alg.cycle.TiernanSimpleCycles;
 import org.jgrapht.graph.DefaultDirectedGraph;
 import org.jgrapht.graph.DefaultEdge;
 
+import java.util.Collection;
 import java.util.List;
 import java.util.Set;
 
@@ -50,21 +48,16 @@ public class ClassDependencies {
     }
 
     private void analyseClasses() {
-        getClassDependencyGraph(classFinder.getJavaClassList());
+        getClassDependencyGraph(classFinder.getJavaClassInformationList());
     }
 
 
-    private void getClassDependencyGraph(List<JavaClass> classes) {
+    private void getClassDependencyGraph(Collection<JavaClassInformation> classes) {
         packageGraph = new DefaultDirectedGraph<>(DefaultEdge.class);
 
-        for (JavaClass from : classes) {
-
-            ConstantPool constantPool = from.getConstantPool();
-            ReferenceExtractingVisitor visitor = new ReferenceExtractingVisitor(constantPool);
-            DescendingVisitor descendingVisitor = new DescendingVisitor(from, visitor);
-            descendingVisitor.visit();
-            Set<String> efferentDependencies = visitor.getDependencies();
-            String fromPkg = convertToPackage(from.getClassName());
+        for (final JavaClassInformation from : classes) {
+            Set<String> efferentDependencies = from.getReferencedClasses();
+            String fromPkg = convertToPackage(from.getFullyQualifiedClassName());
             packageGraph.addVertex(fromPkg);
             for (String to : efferentDependencies) {
                 if (to.startsWith(basePackage)) {
@@ -91,6 +84,7 @@ public class ClassDependencies {
         return cycleDetector.findCycles();
     }
 
+    
     /**
      * Returns the number of packages in the dependency graph including those not involved in a dependency cycle.
      *
@@ -126,5 +120,9 @@ public class ClassDependencies {
             return 0;
         }
         return (double) numberOfPackagesInCycles / numberOfPackages;
+    }
+
+    public List<List<String>> getPackageCycles() {
+        return new TiernanSimpleCycles<>(packageGraph).findSimpleCycles();
     }
 }

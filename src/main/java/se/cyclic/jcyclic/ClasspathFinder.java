@@ -7,6 +7,7 @@ import org.apache.bcel.classfile.JavaClass;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 
@@ -25,9 +26,7 @@ public class ClasspathFinder implements ClassFinder {
 
     private String basePackage;
 
-
-    @Override
-    public List<JavaClass> getJavaClassList() {
+    private List<JavaClass> getJavaClassList() {
         final ImmutableSet<ClassPath.ClassInfo> allClasses;
         try {
             allClasses = ClassPath.from(ClassLoader.getSystemClassLoader()).getAllClasses();
@@ -42,6 +41,15 @@ public class ClasspathFinder implements ClassFinder {
         } catch (IOException | ClassNotFoundException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    @Override
+    public Collection<JavaClassInformation> getJavaClassInformationList() {
+        List<JavaClassInformation> classes = new ArrayList<>();
+        for (JavaClass javaClass : getJavaClassList()) {
+            classes.add(new JavaClassInformation(javaClass));
+        }
+        return classes;
     }
 
 }

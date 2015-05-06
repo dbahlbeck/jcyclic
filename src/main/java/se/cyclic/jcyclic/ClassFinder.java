@@ -2,6 +2,7 @@ package se.cyclic.jcyclic;
 
 import org.apache.bcel.classfile.JavaClass;
 
+import java.util.Collection;
 import java.util.List;
 
 /**
@@ -13,5 +14,5 @@ public interface ClassFinder {
      * @return a list of JavaClass instances. I should probably do this better but currently this relies on the awesome 
      * apache BCEL library.
      */
-    List<JavaClass> getJavaClassList();
+    Collection<JavaClassInformation> getJavaClassInformationList();
 }

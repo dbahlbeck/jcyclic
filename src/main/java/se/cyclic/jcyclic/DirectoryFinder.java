@@ -3,7 +3,6 @@ package se.cyclic.jcyclic;
 
 import org.apache.bcel.classfile.ClassParser;
 import org.apache.bcel.classfile.JavaClass;
-import org.apache.bcel.util.SyntheticRepository;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.filefilter.DirectoryFileFilter;
 import org.apache.commons.io.filefilter.SuffixFileFilter;
@@ -28,8 +27,7 @@ public class DirectoryFinder implements ClassFinder {
         this.directory = directory;
     }
 
-    @Override
-    public List<JavaClass> getJavaClassList() {
+    private List<JavaClass> getJavaClassList() {
         Collection<File> files = FileUtils.listFiles(directory, new SuffixFileFilter("class"), DirectoryFileFilter.DIRECTORY);
         
         try {
@@ -47,6 +45,15 @@ public class DirectoryFinder implements ClassFinder {
         }
     }
 
+
+    @Override
+    public Collection<JavaClassInformation> getJavaClassInformationList() {
+        List<JavaClassInformation> classes = new ArrayList<>();
+        for (JavaClass javaClass : getJavaClassList()) {
+            classes.add(new JavaClassInformation(javaClass));
+        }
+        return classes;
+    }
 
 
     private String getClassNameFromFile(File file) {
