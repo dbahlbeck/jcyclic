@@ -34,7 +34,7 @@ public class ClassDependenciesTest {
     }
     
     @Test
-    public void testGetPacakgeCycles() {
+    public void testGetPackageCycles() {
         List<List<String>> cycles = classDependencies.getPackageCycles();
         Assert.assertEquals(1, cycles.size());
         List<String> packageCycle = cycles.get(0);
@@ -52,4 +52,10 @@ public class ClassDependenciesTest {
     public void testCycleToPackageRatio() {
         Assert.assertEquals(1,  classDependencies.getCycleToPackageRatio(), 0.0);
     } 
+    
+    @Test
+    public void testCountCycles() {
+        Assert.assertEquals(1, classDependencies.getNumberOfCycles());
+        
+    }
 }

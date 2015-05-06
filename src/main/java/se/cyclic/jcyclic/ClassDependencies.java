@@ -125,4 +125,8 @@ public class ClassDependencies {
     public List<List<String>> getPackageCycles() {
         return new TiernanSimpleCycles<>(packageGraph).findSimpleCycles();
     }
+
+    public int getNumberOfCycles() {
+        return new TiernanSimpleCycles<>(packageGraph).findSimpleCycles().size();
+    }
 }
