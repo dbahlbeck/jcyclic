@@ -51,7 +51,6 @@ public class ClassDependencies {
         getClassDependencyGraph(classFinder.getJavaClassInformationList());
     }
 
-
     private void getClassDependencyGraph(Collection<JavaClassInformation> classes) {
         packageGraph = new DefaultDirectedGraph<>(DefaultEdge.class);
 
@@ -84,7 +83,6 @@ public class ClassDependencies {
         return cycleDetector.findCycles();
     }
 
-    
     /**
      * Returns the number of packages in the dependency graph including those not involved in a dependency cycle.
      *
