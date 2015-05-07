@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.Set;
 
 /**
- * Tests the cyclic dependency analysis on the classpath
+ * Tests the cyclic dependency analysis on the classpath.
  */
 public class ClassDependenciesTest {
 
@@ -57,5 +57,29 @@ public class ClassDependenciesTest {
     public void testCountCycles() {
         Assert.assertEquals(1, classDependencies.getNumberOfCycles());
         
+    }
+    
+    @Test
+    public void testNoPackageNoIncluded() {
+        final TestClassFinder classFinder = new TestClassFinder();
+        classFinder.addDependency("Foo", "se.cyclic.jcyclic.dummypackage2.Bar");
+        classFinder.addDependency("se.cyclic.jcyclic.dummypackage2.Bar", "Foo");
+        ClassDependencies classDependencies = new ClassDependencies(classFinder, "se.cyclic.jcyclic");
+
+        List<List<String>> cycles = classDependencies.getPackageCycles();
+        // No cycles because we are analysing a certain package
+        Assert.assertEquals(0, cycles.size());
+    }    
+    
+    @Test
+    public void testNoPackageIncluded() {
+        final TestClassFinder classFinder = new TestClassFinder();
+        classFinder.addDependency("Foo", "se.cyclic.jcyclic.dummypackage2.Bar");
+        classFinder.addDependency("se.cyclic.jcyclic.dummypackage2.Bar", "Foo");
+        ClassDependencies classDependencies = new ClassDependencies(classFinder, "");
+
+        List<List<String>> cycles = classDependencies.getPackageCycles();
+        // No cycles because we are analysing a certain package
+        Assert.assertEquals(1, cycles.size());
     }
 }

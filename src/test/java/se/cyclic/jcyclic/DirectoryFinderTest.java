@@ -34,14 +34,12 @@ public class DirectoryFinderTest {
         Collection<JavaClassInformation> javaClasses = finder.getJavaClassInformationList();
         List<String> classNames = convertToClassNames(javaClasses);
 
-        Assert.assertTrue(classNames.contains("se.cyclic.jcyclic.dummypackage.JustForTesting"));
-        Assert.assertTrue(classNames.contains("se.cyclic.jcyclic.dummypackage2.JustForTesting2"));
         Assert.assertTrue(classNames.contains("se.cyclic.jcyclic.ClasspathFinderTest"));
         Assert.assertTrue(classNames.contains("se.cyclic.jcyclic.DirectoryFinderTest"));
         Assert.assertTrue(classNames.contains("se.cyclic.jcyclic.ClassDependenciesTest"));
         Assert.assertTrue(classNames.contains("se.cyclic.jcyclic.TestClassFinder"));
 
-        Assert.assertEquals(6, classNames.size());
+        Assert.assertEquals(4, classNames.size());
     }
 
     private List<String> convertToClassNames(Collection<JavaClassInformation> javaClasses) {

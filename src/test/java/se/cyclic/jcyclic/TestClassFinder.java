@@ -29,4 +29,11 @@ public class TestClassFinder implements ClassFinder {
     public Collection<JavaClassInformation> getJavaClassInformationList() {
         return classInfos.values();
     }
+
+    @Override
+    public String toString() {
+        return "TestClassFinder{" +
+                "classInfos=" + classInfos +
+                '}';
+    }
 }

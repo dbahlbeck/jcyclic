@@ -60,7 +60,7 @@ public class ClassDependencies {
             String fromPkg = convertToPackage(from.getFullyQualifiedClassName());
             packageGraph.addVertex(fromPkg);
             for (String to : efferentDependencies) {
-                if (to.startsWith(basePackage)) {
+                if (to.startsWith(basePackage) || to.startsWith(NO_PACAKGE)) {
                     String toPkg = convertToPackage(to);
                     if (!fromPkg.equals(toPkg)) {
                         packageGraph.addVertex(toPkg);
