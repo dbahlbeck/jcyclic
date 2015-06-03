@@ -11,6 +11,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -28,6 +29,9 @@ public class DirectoryFinder implements ClassFinder {
     }
 
     private List<JavaClass> getJavaClassList() {
+        if (!directory.exists()) {
+            return Collections.emptyList();
+        }
         Collection<File> files = FileUtils.listFiles(directory, new SuffixFileFilter("class"), DirectoryFileFilter.DIRECTORY);
         
         try {

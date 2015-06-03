@@ -42,6 +42,12 @@ public class DirectoryFinderTest {
         Assert.assertEquals(4, classNames.size());
     }
 
+    @Test
+    public void testEmptyDir() {
+        DirectoryFinder directoryFinder = new DirectoryFinder(new File("doesNotExist"));
+        Assert.assertTrue(directoryFinder.getJavaClassInformationList().isEmpty());
+    }
+
     private List<String> convertToClassNames(Collection<JavaClassInformation> javaClasses) {
         List<String> classNames = new ArrayList<>();
         for (JavaClassInformation javaClass : javaClasses) {
