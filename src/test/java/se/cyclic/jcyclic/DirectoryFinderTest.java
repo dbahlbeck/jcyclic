@@ -39,8 +39,6 @@ public class DirectoryFinderTest {
         Assert.assertTrue(classNames.contains("se.cyclic.jcyclic.DirectoryFinderTest"));
         Assert.assertTrue(classNames.contains("se.cyclic.jcyclic.ClassDependenciesTest"));
         Assert.assertTrue(classNames.contains("se.cyclic.jcyclic.TestClassFinder"));
-
-        Assert.assertEquals(4, classNames.size());
     }
 
     @Test

@@ -2,6 +2,7 @@ package se.cyclic.jcyclic;
 
 import org.jgrapht.DirectedGraph;
 import org.jgrapht.alg.CycleDetector;
+import org.jgrapht.alg.StrongConnectivityInspector;
 import org.jgrapht.alg.cycle.TiernanSimpleCycles;
 import org.jgrapht.graph.DefaultDirectedGraph;
 import org.jgrapht.graph.DefaultEdge;
@@ -22,6 +23,7 @@ import java.util.Set;
 public class ClassDependencies {
     private static final String NO_PACAKGE = "<no package>";
     private DirectedGraph<String, DefaultEdge> packageGraph = new DefaultDirectedGraph<>(DefaultEdge.class);
+    private DirectedGraph<String, DefaultEdge> classGraph = new DefaultDirectedGraph<>(DefaultEdge.class);
     private ClassFinder classFinder;
     private String basePackage;
 
@@ -61,8 +63,11 @@ public class ClassDependencies {
 
             if (fromPkg.startsWith(basePackage)) {
                 packageGraph.addVertex(fromPkg);
+                classGraph.addVertex(from.getFullyQualifiedClassName());
                 for (String to : efferentDependencies) {
                     if (to.startsWith(basePackage) || to.startsWith(NO_PACAKGE)) {
+                        classGraph.addVertex(to);
+                        classGraph.addEdge(from.getFullyQualifiedClassName(), to);
                         String toPkg = convertToPackage(to);
                         if (!fromPkg.equals(toPkg)) {
                             packageGraph.addVertex(toPkg);
@@ -139,4 +144,8 @@ public class ClassDependencies {
         return result;
     }
 
+    public List<Set<String>> getStrongComponents() {
+        StrongConnectivityInspector<String,DefaultEdge> strongConnectivityInspector = new StrongConnectivityInspector<>(classGraph);
+        return strongConnectivityInspector.stronglyConnectedSets();
+    }
 }

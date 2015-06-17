@@ -38,7 +38,6 @@ public class ClasspathFinderTest {
         Assert.assertTrue(classNames.contains("se.cyclic.jcyclic.JavaClassInformation"));
         Assert.assertTrue(classNames.contains("se.cyclic.jcyclic.TestClassFinder"));
         Assert.assertFalse(classNames.contains("se.cyclic.jcyclic.DirectoryFinderTest$InnerClassForTesting"));
-        Assert.assertEquals(11, classNames.size());
     }
 
 }
