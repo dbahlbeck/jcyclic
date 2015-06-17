@@ -15,6 +15,7 @@ public void testForPackageCyclicDependencies() {
     ClassFinder finder = new DirectoryFinder(new File("build/classes/main"));
     ClassDependencies classDependencies = new ClassDependencies(classFinder, "se.cyclic.jcyclic");
 
+    // Analyse the package and class graph
     Set<String> cycles = classDependencies.getPackagesInCycles();
     List<List<String>> cycles = classDependencies.getPackageCycles();
 }
