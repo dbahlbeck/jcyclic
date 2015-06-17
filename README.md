@@ -1,7 +1,11 @@
 # JCyclic Introduction
 This API provides a simple a mechanism for finding cyclic dependencies in you classpath.
 # Usage
-From a test class instantiate the 'Cycles' class with a package name then call one of the methods that searches for dependencies:
+The basic usage is this:
+1. Grab something that can find your classes (either from class files in a Directory or from the classpath/classloader)
+2. Instantiate ClassDependencies with that 'class finder' and a base package.
+3. Now you can query the results.
+
 ```java
 @Test
 public void testForPackageCyclicDependencies() {
