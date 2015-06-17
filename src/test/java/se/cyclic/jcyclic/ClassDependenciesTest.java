@@ -34,6 +34,21 @@ public class ClassDependenciesTest {
     }
     
     @Test
+    public void testExcludePackages() {
+        final TestClassFinder classFinder = new TestClassFinder();
+        classFinder.addDependency("a.b.c.d.X", "a.b.wrong.d.e.Y");
+        classFinder.addDependency("a.b.wrong.d.e.Y", "a.b.c.d.X");
+        classFinder.addDependency("a.b.c.d.X", "a.b.c.d.e.Y");
+        classFinder.addDependency("a.b.c.d.e.Y", "a.b.c.d.X");
+        ClassDependencies dependencies = new ClassDependencies(classFinder, "a.b.c");
+
+        List<Dependency> deps = dependencies.getEdges();
+        Assert.assertTrue(deps.contains(new Dependency("a.b.c.d", "a.b.c.d.e")));
+        Assert.assertTrue(deps.contains(new Dependency("a.b.c.d.e", "a.b.c.d")));
+        Assert.assertEquals(2, deps.size());
+    }
+
+    @Test
     public void testGetPackageCycles() {
         List<List<String>> cycles = classDependencies.getPackageCycles();
         Assert.assertEquals(1, cycles.size());

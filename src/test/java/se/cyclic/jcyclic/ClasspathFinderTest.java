@@ -32,12 +32,13 @@ public class ClasspathFinderTest {
         Assert.assertTrue(classNames.contains("se.cyclic.jcyclic.ClassDependencies"));
         Assert.assertTrue(classNames.contains("se.cyclic.jcyclic.ClasspathFinder"));
         Assert.assertTrue(classNames.contains("se.cyclic.jcyclic.ClassFinder"));
+        Assert.assertTrue(classNames.contains("se.cyclic.jcyclic.Dependency"));
         Assert.assertTrue(classNames.contains("se.cyclic.jcyclic.DirectoryFinder"));
         Assert.assertTrue(classNames.contains("se.cyclic.jcyclic.DirectoryFinderTest"));
         Assert.assertTrue(classNames.contains("se.cyclic.jcyclic.JavaClassInformation"));
         Assert.assertTrue(classNames.contains("se.cyclic.jcyclic.TestClassFinder"));
         Assert.assertFalse(classNames.contains("se.cyclic.jcyclic.DirectoryFinderTest$InnerClassForTesting"));
-        Assert.assertEquals(10, classNames.size());
+        Assert.assertEquals(11, classNames.size());
     }
 
 }

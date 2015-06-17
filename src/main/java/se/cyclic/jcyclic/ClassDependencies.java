@@ -6,6 +6,7 @@ import org.jgrapht.alg.cycle.TiernanSimpleCycles;
 import org.jgrapht.graph.DefaultDirectedGraph;
 import org.jgrapht.graph.DefaultEdge;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Set;
@@ -57,20 +58,21 @@ public class ClassDependencies {
         for (final JavaClassInformation from : classes) {
             Set<String> efferentDependencies = from.getReferencedClasses();
             String fromPkg = convertToPackage(from.getFullyQualifiedClassName());
-            packageGraph.addVertex(fromPkg);
-            for (String to : efferentDependencies) {
-                if (to.startsWith(basePackage) || to.startsWith(NO_PACAKGE)) {
-                    String toPkg = convertToPackage(to);
-                    if (!fromPkg.equals(toPkg)) {
-                        packageGraph.addVertex(toPkg);
-                        packageGraph.addEdge(fromPkg, toPkg);
-                    }
-                }
 
+            if (fromPkg.startsWith(basePackage)) {
+                packageGraph.addVertex(fromPkg);
+                for (String to : efferentDependencies) {
+                    if (to.startsWith(basePackage) || to.startsWith(NO_PACAKGE)) {
+                        String toPkg = convertToPackage(to);
+                        if (!fromPkg.equals(toPkg)) {
+                            packageGraph.addVertex(toPkg);
+                            packageGraph.addEdge(fromPkg, toPkg);
+                        }
+                    }
+
+                }
             }
         }
-
-
     }
 
     /**
@@ -127,4 +129,14 @@ public class ClassDependencies {
     public int getNumberOfCycles() {
         return new TiernanSimpleCycles<>(packageGraph).findSimpleCycles().size();
     }
+
+    public List<Dependency> getEdges() {
+        final List<Dependency> result = new ArrayList<>();
+        final Set<DefaultEdge> defaultEdges = packageGraph.edgeSet();
+        for (DefaultEdge defaultEdge : defaultEdges) {
+            result.add(new Dependency(packageGraph.getEdgeSource(defaultEdge), packageGraph.getEdgeTarget(defaultEdge)));
+        }
+        return result;
+    }
+
 }
