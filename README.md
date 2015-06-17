@@ -3,7 +3,9 @@ This API provides a simple a mechanism for finding cyclic dependencies in you cl
 # Usage
 The basic usage is this:
 
-1. Grab something that can find your classes (either from class files in a Directory or from the classpath/classloader)
+1. Instantiate something that can find your classes. Either:
+  * DirectoryFinder
+  * ClasspathFinder
 2. Instantiate ClassDependencies with that 'class finder' and a base package.
 3. Now you can query the results.
 
