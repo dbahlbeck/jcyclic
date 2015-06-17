@@ -5,15 +5,14 @@ From a test class instantiate the 'Cycles' class with a package name then call o
 ```java
 @Test
 public void testForPackageCyclicDependencies() {
-    ClassFinder classFinder = new ClassFinder("se.cyclic.jcyclic");
+    ClassFinder finder = new DirectoryFinder(new File("build/classes/main"));
     ClassDependencies classDependencies = new ClassDependencies(classFinder, "se.cyclic.jcyclic");
 
+    Set<String> cycles = classDependencies.getPackagesInCycles();
     List<List<String>> cycles = classDependencies.getPackageCycles();
-    List<List<String>> classCycles = classDependencies.getClassCycles(); 
 }
 ```
 # Coming soon
-- Exclusions for classes and packages
 - Gradle plugin
   
     
