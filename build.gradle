@@ -13,7 +13,7 @@ apply plugin: 'maven-publish'
 apply plugin: 'com.jfrog.bintray'
 
 group = 'se.cyclic.jcyclic'
-version = '0.1.6'
+version = '0.1.7'
 
 // custom tasks for creating source/javadoc jars
 task sourcesJar(type: Jar, dependsOn: classes) {
@@ -75,6 +75,6 @@ dependencies {
     testCompile 'junit:junit:4.12'
     compile 'com.google.guava:guava:18.0'
     compile 'commons-io:commons-io:2.4'
-    compile 'org.apache.bcel:bcel:5.2'
+    compile 'com.google.code.findbugs:bcel-findbugs:6.0'
     compile 'org.jgrapht:jgrapht-core:0.9.0'
 }
