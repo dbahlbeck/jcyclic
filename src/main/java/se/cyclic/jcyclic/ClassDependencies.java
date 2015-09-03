@@ -6,6 +6,8 @@ import org.jgrapht.alg.StrongConnectivityInspector;
 import org.jgrapht.alg.cycle.TiernanSimpleCycles;
 import org.jgrapht.graph.DefaultDirectedGraph;
 import org.jgrapht.graph.DefaultEdge;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
 import java.util.Collection;

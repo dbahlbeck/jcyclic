@@ -6,6 +6,8 @@ import org.apache.bcel.classfile.JavaClass;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.filefilter.DirectoryFileFilter;
 import org.apache.commons.io.filefilter.SuffixFileFilter;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.File;
 import java.io.IOException;
@@ -20,7 +22,7 @@ import java.util.List;
  */
 public class DirectoryFinder implements ClassFinder {
     private File directory;
-
+    private static final Logger LOGGER = LoggerFactory.getLogger(DirectoryFinder.class);
     /**
      * @param directory
      */
@@ -29,6 +31,7 @@ public class DirectoryFinder implements ClassFinder {
     }
 
     private List<JavaClass> getJavaClassList() {
+        LOGGER.debug("Searching for class files in " + directory.getAbsolutePath());
         if (!directory.exists()) {
             return Collections.emptyList();
         }
@@ -37,16 +40,19 @@ public class DirectoryFinder implements ClassFinder {
         try {
             List<JavaClass> javaClasses = new ArrayList<>();
             for (File file : files) {
+                LOGGER.debug("Class file " + file.getName());
                 String fullyQualifiedClassName = getClassNameFromFile(file);
                 if (!fullyQualifiedClassName.contains("$")) {
                     ClassParser classParser = new ClassParser(file.getAbsolutePath());
                     javaClasses.add(classParser.parse());
                 }
             }
+            LOGGER.debug("Done searching for class files in " + directory.getAbsolutePath()+". Analysed "+javaClasses.size() + " classes");
             return javaClasses;
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+
     }
 
 
