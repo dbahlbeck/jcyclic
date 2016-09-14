@@ -48,7 +48,6 @@ public class JavaClassInformation {
         JavaClassInformation that = (JavaClassInformation) o;
 
         return fullyQualifiedClassName.equals(that.fullyQualifiedClassName) && referencedClasses.equals(that.referencedClasses);
-
     }
 
     @Override

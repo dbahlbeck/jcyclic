@@ -27,9 +27,9 @@ public class ClassDependenciesTest {
     
     @Test
     public void testFindPackageCycles() {
-        Set<String> cycles = classDependencies.getPackagesInCycles();
-        Assert.assertTrue(cycles.contains("se.cyclic.jcyclic.dummypackage"));
-        Assert.assertTrue(cycles.contains("se.cyclic.jcyclic.dummypackage2"));
+        Set<Package> cycles = classDependencies.getPackagesInCycles();
+        Assert.assertTrue(cycles.contains(new Package("se.cyclic.jcyclic.dummypackage")));
+        Assert.assertTrue(cycles.contains(new Package("se.cyclic.jcyclic.dummypackage2")));
         Assert.assertEquals(2, cycles.size());
     }
     
@@ -43,19 +43,19 @@ public class ClassDependenciesTest {
         ClassDependencies dependencies = new ClassDependencies(classFinder, "a.b.c");
 
         List<Dependency> deps = dependencies.getEdges();
-        Assert.assertTrue(deps.contains(new Dependency("a.b.c.d", "a.b.c.d.e")));
-        Assert.assertTrue(deps.contains(new Dependency("a.b.c.d.e", "a.b.c.d")));
+        Assert.assertTrue(deps.contains(new Dependency(new Package("a.b.c.d"), new Package("a.b.c.d.e"))));
+        Assert.assertTrue(deps.contains(new Dependency(new Package("a.b.c.d.e"), new Package("a.b.c.d"))));
         Assert.assertEquals(2, deps.size());
     }
 
     @Test
     public void testGetPackageCycles() {
-        List<List<String>> cycles = classDependencies.getPackageCycles();
+        List<List<Package>> cycles = classDependencies.getPackageCycles();
         Assert.assertEquals(1, cycles.size());
-        List<String> packageCycle = cycles.get(0);
+        List<Package> packageCycle = cycles.get(0);
         Assert.assertEquals(2, packageCycle.size());
-        Assert.assertTrue(packageCycle.contains("se.cyclic.jcyclic.dummypackage"));
-        Assert.assertTrue(packageCycle.contains("se.cyclic.jcyclic.dummypackage2"));
+        Assert.assertTrue(packageCycle.contains(new Package("se.cyclic.jcyclic.dummypackage")));
+        Assert.assertTrue(packageCycle.contains(new Package("se.cyclic.jcyclic.dummypackage2")));
     }
     
     @Test
@@ -81,7 +81,7 @@ public class ClassDependenciesTest {
         classFinder.addDependency("se.cyclic.jcyclic.dummypackage2.Bar", "Foo");
         ClassDependencies classDependencies = new ClassDependencies(classFinder, "se.cyclic.jcyclic");
 
-        List<List<String>> cycles = classDependencies.getPackageCycles();
+        List<List<Package>> cycles = classDependencies.getPackageCycles();
         // No cycles because we are analysing a certain package
         Assert.assertEquals(0, cycles.size());
     }    
@@ -93,7 +93,7 @@ public class ClassDependenciesTest {
         classFinder.addDependency("se.cyclic.jcyclic.dummypackage2.Bar", "Foo");
         ClassDependencies classDependencies = new ClassDependencies(classFinder, "");
 
-        List<List<String>> cycles = classDependencies.getPackageCycles();
+        List<List<Package>> cycles = classDependencies.getPackageCycles();
         // No cycles because we are analysing a certain package
         Assert.assertEquals(1, cycles.size());
     }

@@ -24,7 +24,7 @@ import java.util.Set;
  */
 public class ClassDependencies {
     private static final String NO_PACAKGE = "<no package>";
-    private DirectedGraph<String, DefaultEdge> packageGraph = new DefaultDirectedGraph<>(DefaultEdge.class);
+    private DirectedGraph<Package, DefaultEdge> packageGraph = new DefaultDirectedGraph<>(DefaultEdge.class);
     private DirectedGraph<String, DefaultEdge> classGraph = new DefaultDirectedGraph<>(DefaultEdge.class);
     private ClassFinder classFinder;
     private String basePackage;
@@ -60,17 +60,17 @@ public class ClassDependencies {
         packageGraph = new DefaultDirectedGraph<>(DefaultEdge.class);
 
         for (final JavaClassInformation from : classes) {
-            Set<String> efferentDependencies = from.getReferencedClasses();
-            String fromPkg = convertToPackage(from.getFullyQualifiedClassName());
+            final Set<String> efferentDependencies = from.getReferencedClasses();
+            final Package fromPkg = convertToPackage(from.getFullyQualifiedClassName());
 
-            if (fromPkg.startsWith(basePackage)) {
+            if (fromPkg.belongsTo(basePackage)) {
                 packageGraph.addVertex(fromPkg);
                 classGraph.addVertex(from.getFullyQualifiedClassName());
                 for (String to : efferentDependencies) {
                     if (to.startsWith(basePackage) || to.startsWith(NO_PACAKGE)) {
                         classGraph.addVertex(to);
                         classGraph.addEdge(from.getFullyQualifiedClassName(), to);
-                        String toPkg = convertToPackage(to);
+                        Package toPkg = convertToPackage(to);
                         if (!fromPkg.equals(toPkg)) {
                             packageGraph.addVertex(toPkg);
                             packageGraph.addEdge(fromPkg, toPkg);
@@ -87,8 +87,8 @@ public class ClassDependencies {
      *
      * @return a set of package names
      */
-    public Set<String> getPackagesInCycles() {
-        CycleDetector<String, DefaultEdge> cycleDetector = new CycleDetector<>(packageGraph);
+    public Set<Package> getPackagesInCycles() {
+        CycleDetector<Package, DefaultEdge> cycleDetector = new CycleDetector<>(packageGraph);
         return cycleDetector.findCycles();
     }
 
@@ -107,12 +107,12 @@ public class ClassDependencies {
      * @param fullyQualifiedClassName a fully qualified class name
      * @return the class's package
      */
-    private String convertToPackage(String fullyQualifiedClassName) {
+    private Package convertToPackage(String fullyQualifiedClassName) {
         final int lastDotIndex = fullyQualifiedClassName.lastIndexOf('.');
         if (lastDotIndex == -1) {
-            return NO_PACAKGE;
+            return new Package(NO_PACAKGE);
         }
-        return fullyQualifiedClassName.substring(0, lastDotIndex);
+        return new Package(fullyQualifiedClassName.substring(0, lastDotIndex));
     }
 
     /**
@@ -129,7 +129,7 @@ public class ClassDependencies {
         return (double) numberOfPackagesInCycles / numberOfPackages;
     }
 
-    public List<List<String>> getPackageCycles() {
+    public List<List<Package>> getPackageCycles() {
         return new TiernanSimpleCycles<>(packageGraph).findSimpleCycles();
     }
 

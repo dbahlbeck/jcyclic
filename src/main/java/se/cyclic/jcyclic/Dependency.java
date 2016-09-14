@@ -1,19 +1,19 @@
 package se.cyclic.jcyclic;
 
 public class Dependency {
-    private final String from;
-    private final String to;
+    private final Package from;
+    private final Package to;
 
-    public Dependency(String from, String to) {
+    public Dependency(Package from, Package to) {
         this.from = from;
         this.to = to;
     }
 
-    public String getFrom() {
+    public Package getFrom() {
         return from;
     }
 
-    public String getTo() {
+    public Package getTo() {
         return to;
     }
 
