@@ -47,6 +47,8 @@ compileJava {
 
 }
 
+ext.bintrayApiKey='undefined'
+
 bintray {
     user = 'wursley'
     key = bintrayApiKey
