@@ -4,6 +4,7 @@ buildscript {
     }
     dependencies {
         classpath 'com.jfrog.bintray.gradle:gradle-bintray-plugin:1.0'
+        classpath 'org.ajoberstar:gradle-git:1.5.1'
     }
 }
 
@@ -11,6 +12,8 @@ apply plugin: 'java'
 apply plugin: 'groovy'
 apply plugin: 'maven-publish'
 apply plugin: 'com.jfrog.bintray'
+apply plugin: 'org.ajoberstar.grgit'
+apply plugin: "org.ajoberstar.release-opinion"
 
 group = 'se.cyclic.jcyclic'
 version = '0.1.8'
