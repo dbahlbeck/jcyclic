@@ -22,3 +22,8 @@ Corrections to class analysing from .class files
 -----
 Cycle detection was very slow so I've replaced it with a simpler mechanism
 that only finds the packages involved in a cycle.
+
+0.2
+---
+
+Tidying up the implementation in order to add new stuff
