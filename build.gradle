@@ -46,9 +46,8 @@ compileJava {
     sourceCompatibility = 1.7
 
 }
-if (!hasProperty('bintrayApiKey')) {
-  bintrayApiKey='foo'
-}
+
+bintrayApiKey='foo'
 
 bintray {
     user = 'wursley'
