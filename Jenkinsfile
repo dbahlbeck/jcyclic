@@ -1,3 +1,3 @@
 node{
-  sh './gradle test'
+  sh './gradlew test'
 }
