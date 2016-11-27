@@ -47,24 +47,6 @@ compileJava {
 
 }
 
-bintrayApiKey='foo'
-
-bintray {
-    user = 'wursley'
-    key = bintrayApiKey
-    publications = ['mavenJava']
-    pkg {
-        repo = 'maven'
-        name = 'jcyclic'
-        desc = 'A Java API for finding cyclic dependencies'
-        licenses = ['MIT']
-        vcsUrl = 'https://github.com/wursley/jcyclic.git'
-        websiteUrl = 'https://github.com/wursley/jcyclic.git'
-        issueTrackerUrl = 'https://github.com/wursley/jcyclic/issues'
-        labels = ['java', 'dependencies', 'cycles', 'packages', 'classes']
-    }
-}
-
 test {
     useJUnit()
 }
